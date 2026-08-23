@@ -15,7 +15,7 @@ Use the official Customer.io MCP server bundled with this plugin, then drive the
 
 1. Confirm the `customerio` MCP server is enabled and complete Customer.io OAuth.
 2. Select the workspaces and minimum permission scopes needed for the task.
-3. This local and initial public draft targets US accounts at `mcp.customer.io`. EU accounts currently use `mcp-eu.customer.io`; a later global release should route the region behind one Universal endpoint after OAuth identifies the account's data center.
+3. The plugin uses the Universal `mcp.customer.io` entry point for both US and EU accounts. OAuth identifies the selected account's data center, and Customer.io routes EU requests to `mcp-eu.customer.io`; do not ask the user to choose a region manually.
 4. Do not paste personal MCP URLs, API keys, or service-account tokens into plugin files.
 
 ## First calls

@@ -2,12 +2,12 @@
 
 ## Recommended MCP URL design
 
-Use a **Universal** MCP URL for the US-first submission:
+Use a **Universal** MCP URL for both US and EU accounts:
 
 - MCP Server URL: `https://mcp.customer.io/mcp`
-- Initial availability: US Customer.io accounts
+- Availability: US and EU Customer.io accounts
 
-OpenAI recommends Universal URLs for most submissions and reserves Template URLs for approved, limited cases. For a later US-and-EU version, keep one Universal Customer.io endpoint, determine the account's region during OAuth, and bind the authenticated session to the corresponding US or EU backend. The OAuth flow can identify the region, but the Universal MCP endpoint still has to route subsequent MCP requests because OAuth does not replace the MCP URL already configured in the client.
+OpenAI recommends Universal URLs for most submissions and reserves Template URLs for approved, limited cases. Customer.io already supports this architecture: every account is tied to US or EU, the OAuth flow resolves the selected account's region, and the MCP service routes authenticated requests from the Universal entry point to the correct regional backend. EU consent is handed back to the US OAuth client that initiated the plugin connection, while tool requests use a short-lived signed cross-region context. The plugin does not ask users to select a data center.
 
 ## Listing metadata
 
@@ -62,6 +62,7 @@ Verified on August 23, 2026:
 
 - Both US and EU MCP protected-resource documents are public and advertise the correct region-specific resource URL and Customer.io scopes.
 - Both authorization servers advertise authorization, token, dynamic client registration, authorization-code, and PKCE support.
+- The production services code contains bidirectional OAuth authorization handoff and authenticated request routing between `mcp.customer.io` and `mcp-eu.customer.io`; targeted auth middleware tests pass, and the broader services PR CI is green.
 - The directory, composer, website, support, privacy, terms, and MCP documentation URLs are reachable.
 - The OpenAI domain-verification challenge path currently returns `404`, as expected before the portal issues a verification token. The exact token must be deployed before submission.
 - Tool annotations and authenticated tool behavior remain portal-scan tasks because the server correctly requires OAuth before tool discovery.

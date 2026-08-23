@@ -4,9 +4,9 @@ This draft packages Customer.io's official MCP server with focused workflows for
 
 ## Local test
 
-The bundled MCP configuration targets the US endpoint, `https://mcp.customer.io/mcp`. Enable the `customerio` server, complete Customer.io OAuth, select the workspaces and minimum scopes needed, then start with `cio_prime`.
+The bundled MCP configuration and public plugin both use the Universal entry point, `https://mcp.customer.io/mcp`. Enable the `customerio` server, complete Customer.io OAuth, select the workspaces and minimum scopes needed, then start with `cio_prime`.
 
-For an EU account, change the endpoint to `https://mcp-eu.customer.io/mcp` before connecting. The initial public submission should use the Universal US endpoint. A later global version can keep one Universal URL, determine the account's US or EU region during OAuth, and bind the session to the correct regional backend. OAuth discovery alone cannot change the MCP URL a client already connected to, so the Universal endpoint must perform that routing.
+Every Customer.io account belongs to either the US or EU region. The OAuth flow resolves the selected account's region. If it is an EU account, Customer.io completes OAuth against the original US OAuth client and routes subsequent MCP requests to `https://mcp-eu.customer.io/mcp` with a short-lived signed cross-region context. Users of this plugin therefore do not choose or configure a data center manually. Customer.io's general MCP documentation still lists both regional URLs for clients configured directly.
 
 ## Safety defaults
 
