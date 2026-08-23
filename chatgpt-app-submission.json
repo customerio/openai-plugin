@@ -1,0 +1,176 @@
+{
+  "$schema": "https://developers.openai.com/plugins/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "Customer.io",
+    "subtitle": "Manage customer journeys",
+    "description": "Customer.io helps users inspect workspace data, manage Journeys and Pipelines, build emails in Design Studio, and troubleshoot SDK integrations through Customer.io's official MCP server.",
+    "category": "BUSINESS"
+  },
+  "tools": {
+    "cio_prime": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Returns usage instructions and optional account-plan context without modifying Customer.io data.",
+        "open_world_justification": "Does not send messages, publish content, or change any external system.",
+        "destructive_justification": "Does not delete, overwrite, revoke, or execute any irreversible action."
+      }
+    },
+    "cio_auth_status": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Reads OAuth identity, account and workspace grants, and authentication status without modifying workspace resources.",
+        "open_world_justification": "Does not send, publish, or change data in any public or third-party system.",
+        "destructive_justification": "Does not remove resources, overwrite data, or perform irreversible actions."
+      }
+    },
+    "cio_schema": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Returns Customer.io API endpoint metadata without calling a workspace mutation endpoint.",
+        "open_world_justification": "Does not send messages, publish content, or modify an external system.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform any irreversible action."
+      }
+    },
+    "cio_read_api": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only permits GET requests against allowlisted Customer.io API endpoints and rejects non-GET methods.",
+        "open_world_justification": "Reads data from the user's private Customer.io workspace without sending, publishing, or modifying external systems.",
+        "destructive_justification": "Cannot delete, overwrite, revoke access, or execute an irreversible workspace action."
+      }
+    },
+    "cio_write_api": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Executes allowlisted POST, PUT, or PATCH requests that can create or update Customer.io resources and send messages.",
+        "open_world_justification": "Allowed routes can fire broadcasts or send and schedule messages to recipients outside the Customer.io workspace.",
+        "destructive_justification": "Can overwrite workspace resources or execute irreversible sends, although a dry-run preview is available."
+      }
+    },
+    "cio_delete_api": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Executes allowlisted DELETE requests against Customer.io resources instead of only retrieving data.",
+        "open_world_justification": "Deletes resources within the authenticated Customer.io workspace without directly publishing to the internet or a third-party system.",
+        "destructive_justification": "Permanently removes selected Customer.io resources after an optional dry-run preview."
+      }
+    },
+    "cio_skills_list": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Returns metadata for available Customer.io-maintained agent skills without modifying workspace data.",
+        "open_world_justification": "Does not send, publish, or change data in any public or third-party system.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "cio_skills_read": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Returns the requested Customer.io-maintained skill content without modifying workspace data.",
+        "open_world_justification": "Does not send, publish, or change data in any public or third-party system.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Verify the current Customer.io connection and workspace grant.",
+      "user_prompt": "Which Customer.io workspace is this connection authorized to access, and is authentication healthy?",
+      "file_attachment_urls": null,
+      "tools_triggered": "cio_auth_status",
+      "expected_output": "Reports a healthy connection limited to the authorized Skycouchanddinner workspace without exposing credentials.",
+      "expected_output_url": null
+    },
+    {
+      "description": "List active automations in the authorized workspace.",
+      "user_prompt": "List all active automations in my Skycouchanddinner Customer.io workspace.",
+      "file_attachment_urls": null,
+      "tools_triggered": "cio_prime, cio_skills_read, cio_schema, cio_read_api",
+      "expected_output": "Returns the matching automations and their current statuses without changing workspace data.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Inspect delivery metrics for an onboarding automation.",
+      "user_prompt": "Show me delivery metrics for the onboarding automation in Skycouchanddinner for the last seven days.",
+      "file_attachment_urls": null,
+      "tools_triggered": "cio_prime, cio_schema, cio_read_api",
+      "expected_output": "Returns the relevant delivery metrics for the requested date range with clear labels and no workspace changes.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Preview creation of a draft segment without executing the write.",
+      "user_prompt": "Preview a new draft segment for people who signed up in the last seven days, but do not create it yet.",
+      "file_attachment_urls": null,
+      "tools_triggered": "cio_prime, cio_skills_list, cio_skills_read, cio_schema, cio_write_api",
+      "expected_output": "Returns a dry-run preview of the validated segment request and confirms that no segment was created.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Preview deletion of a draft segment without executing the delete.",
+      "user_prompt": "Preview deleting draft segment 123 in Skycouchanddinner, but do not delete it.",
+      "file_attachment_urls": null,
+      "tools_triggered": "cio_prime, cio_schema, cio_delete_api",
+      "expected_output": "Returns a dry-run preview naming the target and confirms that no resource was deleted.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "Do not trigger Customer.io for calendar requests.",
+      "user_prompt": "What meetings do I have tomorrow?",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The Customer.io app should not be invoked because calendar management is outside its supported workflows.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not trigger Customer.io for personal inbox requests.",
+      "user_prompt": "Draft a reply to the newest email in my Gmail inbox.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The Customer.io app should not be invoked because reading or replying to a personal inbox is outside its supported workflows.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not trigger Customer.io for source-control requests.",
+      "user_prompt": "Open a pull request for the latest changes in my SDK repository.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The Customer.io app should not be invoked because repository and pull-request management are outside its supported workflows.",
+      "expected_output_url": null
+    }
+  ]
+}
