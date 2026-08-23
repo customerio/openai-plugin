@@ -66,6 +66,7 @@ Verified on August 23, 2026:
 - Both authorization servers advertise authorization, token, dynamic client registration, authorization-code, and PKCE support.
 - The production services code contains bidirectional OAuth authorization handoff and authenticated request routing between `mcp.customer.io` and `mcp-eu.customer.io`; targeted auth middleware tests pass, and the broader services PR CI is green.
 - `customerio/services#25232` is out of draft and ready for review; repository policy still requires an approving reviewer before merge.
+- The PR's validator regression tests drive the production MCP server options with all eight real tool descriptors, accept every JSON value returned by the dynamic API envelope, reject a malformed success result, and confirm tool errors bypass success-schema validation.
 - The directory, composer, website, support, privacy, terms, and MCP documentation URLs are reachable.
 - The portal issued domain-verification token `D9XrEaD9zp4PJZePXOVkD2dBhDezTRbIAwh3BgYnvK4`; `customerio/services#25232` now serves it as the exact plain-text response at the required well-known path.
 - The initial authenticated portal scan discovered all eight tools. Production currently recommends an output schema for all eight and still reports the old `openWorldHint: false` for `cio_write_api`, directly confirming the fixes that must be deployed from `customerio/services#25232` before the final rescan.
