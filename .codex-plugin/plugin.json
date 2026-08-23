@@ -1,0 +1,44 @@
+{
+  "name": "customerio",
+  "version": "1.0.0",
+  "description": "Connect ChatGPT and Codex to Customer.io with the official MCP server and workflows for Journeys, Pipelines, Design Studio, and SDK setup.",
+  "author": {
+    "name": "Customer.io",
+    "email": "win@customer.io",
+    "url": "https://customer.io"
+  },
+  "homepage": "https://docs.customer.io/ai/mcp/get-started/",
+  "repository": "https://github.com/customerio/openai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "customerio",
+    "customer.io",
+    "journeys",
+    "automations",
+    "pipelines",
+    "design-studio",
+    "mcp",
+    "messaging"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Customer.io",
+    "shortDescription": "Manage customer journeys",
+    "longDescription": "Connect to Customer.io through the official MCP server to inspect workspace data, manage Journeys and Pipelines, build emails, and troubleshoot SDK integrations.",
+    "developerName": "Customer.io",
+    "category": "Business & Operations",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://customer.io",
+    "privacyPolicyURL": "https://customer.io/legal/privacy-policy",
+    "termsOfServiceURL": "https://customer.io/legal/terms-of-service",
+    "defaultPrompt": [
+      "List the active automations in my Customer.io workspace.",
+      "Review delivery metrics for my onboarding automation.",
+      "Create a draft segment for users who signed up this week."
+    ],
+    "brandColor": "#0B353B",
+    "composerIcon": "./assets/icon-48.png",
+    "logo": "./assets/icon-256.png"
+  }
+}
