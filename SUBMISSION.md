@@ -68,3 +68,12 @@ Verified on August 23, 2026:
 - The directory, composer, website, support, privacy, terms, and MCP documentation URLs are reachable.
 - The portal issued domain-verification token `D9XrEaD9zp4PJZePXOVkD2dBhDezTRbIAwh3BgYnvK4`; `customerio/services#25232` now serves it as the exact plain-text response at the required well-known path.
 - The initial authenticated portal scan discovered all eight tools. Production currently recommends an output schema for all eight and still reports the old `openWorldHint: false` for `cio_write_api`, directly confirming the fixes that must be deployed from `customerio/services#25232` before the final rescan.
+- `chatgpt-app-submission.json` validates against OpenAI's currently published `chatgpt-app-submission.v1.json` JSON Schema and contains exactly eight tools, five positive tests, and three negative tests.
+
+## Submission-skill review findings
+
+- Sensitive data solicitation: no tool input explicitly asks for credentials, MFA codes, payment-card data, government identifiers, biometrics, or health data. The generic API tools can access Customer.io workspace data only within the OAuth account, workspace, route, and scope checks enforced by the service; `read:sensitive` remains a separate opt-in scope.
+- Tool data use: `cio_read_api`, `cio_write_api`, and `cio_delete_api` proxy validated Customer.io API operations. Their descriptions identify the method constraints and dry-run workflow, and the submission tests exercise read-only and preview behavior.
+- Tool naming and descriptions: the eight `cio_*` names match the inspected implementations; no misleading or unsupported capability was found.
+- Widget CSP: the MCP server exposes no widget resources, so there is no widget CSP to narrow or expand.
+- Output schemas: the services PR declares an object-root `outputSchema` for every tool and returns matching structured content on successful calls. The final portal rescan after deployment is still required as production evidence.
