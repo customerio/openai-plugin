@@ -50,7 +50,7 @@ Use `assets/icon-256.png` for the directory icon and `assets/icon-48.png` for th
 ## Remaining portal evidence
 
 - Upload `chatgpt-app-submission.json`, `customerio-plugin-1.0.0.zip`, and the final icons in the portal. The current browser-control session cannot attach local files, so these remain a manual portal handoff even though the JSON content has already been entered into the draft.
-- Merge and deploy `customerio/services#25232`, verify the MCP host at `/.well-known/openai-apps-challenge`, then rescan tools and confirm every tool advertises an output schema plus accurate `readOnlyHint`, `openWorldHint`, and `destructiveHint` annotations.
+- Merge and deploy `customerio/services#25232` to both regions; verify the exact challenge token from `https://mcp.customer.io/.well-known/openai-apps-challenge` and `https://mcp-eu.customer.io/.well-known/openai-apps-challenge`, then rescan the Universal MCP URL and confirm every tool advertises an output schema plus accurate `readOnlyHint`, `openWorldHint`, and `destructiveHint` annotations.
 - Customer.io currently advertises OAuth authorization, token, dynamic client registration, and PKCE endpoints for both regions. It does not currently expose OpenID configuration or a UserInfo endpoint. Add `openid`, `email`, and UserInfo only if workspace domain restrictions are required.
 - Provide a dedicated reviewer account without MFA if OpenAI review requires authenticated testing.
 - Review country availability and complete the portal policy attestations; do not submit until an authorized Customer.io representative has verified every attestation.
