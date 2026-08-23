@@ -2,14 +2,12 @@
 
 ## Recommended MCP URL design
 
-Use an OpenAI-approved **Template** MCP URL so the installer chooses a data center before OAuth:
+Use a **Universal** MCP URL for the US-first submission:
 
-- Example MCP Server URL: `https://mcp.customer.io/mcp`
-- Template MCP Server URL: `https://{region}.customer.io/mcp`
-- `region` choices: `mcp` (US, default) or `mcp-eu` (EU)
-- User-facing field: **Data center**
+- MCP Server URL: `https://mcp.customer.io/mcp`
+- Initial availability: US Customer.io accounts
 
-This preserves one public plugin listing while authenticating against the correct Customer.io region. OpenAI documents template URLs as an approval-only path for trusted developers and applies manual review. If OpenAI does not approve the template, the preferred fallback is a Customer.io-owned universal MCP gateway that selects and routes the region during authentication.
+OpenAI recommends Universal URLs for most submissions and reserves Template URLs for approved, limited cases. For a later US-and-EU version, keep one Universal Customer.io endpoint, determine the account's region during OAuth, and bind the authenticated session to the corresponding US or EU backend. The OAuth flow can identify the region, but the Universal MCP endpoint still has to route subsequent MCP requests because OAuth does not replace the MCP URL already configured in the client.
 
 ## Listing metadata
 
@@ -18,7 +16,7 @@ This preserves one public plugin listing while authenticating against the correc
 - Subtitle: `Manage customer journeys`
 - Category: `Business & Operations`
 - Developer identity: `Business — Peaberry Software, LLC dba Customer.io`
-- Plugin author: `Customer.io`
+- Plugin author: `Peaberry Software, LLC dba Customer.io`
 - Website: `https://customer.io`
 - Support: `https://customer.io/support`
 - Privacy: `https://customer.io/legal/privacy-policy`
@@ -54,7 +52,7 @@ Use `assets/icon-256.png` for the directory icon and `assets/icon-48.png` for th
 - Select the verified `Business — Peaberry Software, LLC dba Customer.io` identity already available in the portal.
 - Add a demo recording URL showing OAuth and representative read/write-dry-run workflows.
 - Verify control of the MCP host at the portal-provided `/.well-known/openai-apps-challenge` URL.
-- Scan tools and verify every tool advertises accurate `readOnlyHint`, `openWorldHint`, and `destructiveHint` annotations.
+- Merge and deploy `customerio/services#25232`, then scan tools and verify every tool advertises an output schema plus accurate `readOnlyHint`, `openWorldHint`, and `destructiveHint` annotations.
 - Customer.io currently advertises OAuth authorization, token, dynamic client registration, and PKCE endpoints for both regions. It does not currently expose OpenID configuration or a UserInfo endpoint. Add `openid`, `email`, and UserInfo only if workspace domain restrictions are required.
 - Choose country availability and complete the portal policy attestations.
 
