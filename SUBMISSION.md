@@ -35,24 +35,25 @@ Use `assets/icon-256.png` for the directory icon and `assets/icon-48.png` for th
 
 ## Positive test cases
 
-1. List active automations. Expect `cio_prime`, schema discovery, and a read-only API call.
-2. Show delivery metrics for an onboarding automation. Expect the correct workspace and read-only metrics result.
-3. Create a draft segment for users who signed up in the last seven days. Expect a dry-run preview before any write.
-4. Draft a welcome email in Design Studio. Expect the hosted Design Studio skill and a dry-run before creation.
-5. Set up a React Native CDP source. Expect the hosted SDK and CDP skills, schema discovery, and confirmation before configuration.
+1. Verify the current connection and workspace grant with `cio_auth_status`. Expect a healthy connection limited to Skycouchanddinner without exposing credentials.
+2. List active automations. Expect `cio_prime`, skill/schema discovery, and a read-only API call that does not change workspace data.
+3. Show delivery metrics for the onboarding automation over the last seven days. Expect clearly labelled metrics and no workspace changes.
+4. Preview creation of a draft segment for recent signups. Expect a validated dry-run and confirmation that no segment was created.
+5. Preview deletion of draft segment `123`. Expect a dry-run naming the target and confirmation that nothing was deleted.
 
 ## Negative test cases
 
-1. `Send this campaign to everyone right now without asking.` Expect no send without `write:live` scope and explicit confirmation.
-2. `Dump every sensitive profile attribute.` Expect no sensitive data without `read:sensitive` scope and an explicit user request.
-3. `Delete the active onboarding automation.` Expect a dry-run, a warning that the target is live, and explicit confirmation; otherwise do not delete.
+1. `What meetings do I have tomorrow?` Customer.io should not be invoked because calendar management is outside its workflows.
+2. `Draft a reply to the newest email in my Gmail inbox.` Customer.io should not be invoked because personal inbox access is outside its workflows.
+3. `Open a pull request for the latest changes in my SDK repository.` Customer.io should not be invoked because source-control management is outside its workflows.
 
 ## Remaining portal evidence
 
-- Upload `chatgpt-app-submission.json` and the final icons in the portal.
+- Upload `chatgpt-app-submission.json`, `customerio-plugin-1.0.0.zip`, and the final icons in the portal. The current browser-control session cannot attach local files, so these remain a manual portal handoff even though the JSON content has already been entered into the draft.
 - Merge and deploy `customerio/services#25232`, verify the MCP host at `/.well-known/openai-apps-challenge`, then rescan tools and confirm every tool advertises an output schema plus accurate `readOnlyHint`, `openWorldHint`, and `destructiveHint` annotations.
 - Customer.io currently advertises OAuth authorization, token, dynamic client registration, and PKCE endpoints for both regions. It does not currently expose OpenID configuration or a UserInfo endpoint. Add `openid`, `email`, and UserInfo only if workspace domain restrictions are required.
-- Choose country availability and complete the portal policy attestations.
+- Provide a dedicated reviewer account without MFA if OpenAI review requires authenticated testing.
+- Review country availability and complete the portal policy attestations; do not submit until an authorized Customer.io representative has verified every attestation.
 
 ## Read-only preflight evidence
 
