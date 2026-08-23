@@ -60,9 +60,11 @@ Use `assets/icon-256.png` for the directory icon and `assets/icon-48.png` for th
 
 Verified on August 23, 2026:
 
+- A private ChatGPT Developer Mode connector (`Customer.io Dev`) was created with the Universal MCP URL, OAuth DCR, and only the `read` scope.
+- Customer.io OAuth authorized workspace `Skycouchanddinner` (`226500`), and ChatGPT successfully listed its four active campaigns without making changes.
 - Both US and EU MCP protected-resource documents are public and advertise the correct region-specific resource URL and Customer.io scopes.
 - Both authorization servers advertise authorization, token, dynamic client registration, authorization-code, and PKCE support.
 - The production services code contains bidirectional OAuth authorization handoff and authenticated request routing between `mcp.customer.io` and `mcp-eu.customer.io`; targeted auth middleware tests pass, and the broader services PR CI is green.
 - The directory, composer, website, support, privacy, terms, and MCP documentation URLs are reachable.
 - The OpenAI domain-verification challenge path currently returns `404`, as expected before the portal issues a verification token. The exact token must be deployed before submission.
-- Tool annotations and authenticated tool behavior remain portal-scan tasks because the server correctly requires OAuth before tool discovery.
+- Authenticated tool behavior is proven in ChatGPT Developer Mode. The final portal scan remains pending until `customerio/services#25232` is deployed so production tool responses include the required output schemas and structured content.
