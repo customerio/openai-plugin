@@ -49,10 +49,8 @@ Use `assets/icon-256.png` for the directory icon and `assets/icon-48.png` for th
 
 ## Remaining portal evidence
 
-- Select the verified `Business — Peaberry Software, LLC dba Customer.io` identity already available in the portal.
-- Add a demo recording URL showing OAuth and representative read/write-dry-run workflows.
-- Verify control of the MCP host at the portal-provided `/.well-known/openai-apps-challenge` URL.
-- Merge and deploy `customerio/services#25232`, then scan tools and verify every tool advertises an output schema plus accurate `readOnlyHint`, `openWorldHint`, and `destructiveHint` annotations.
+- Upload `chatgpt-app-submission.json` and the final icons in the portal.
+- Merge and deploy `customerio/services#25232`, verify the MCP host at `/.well-known/openai-apps-challenge`, then rescan tools and confirm every tool advertises an output schema plus accurate `readOnlyHint`, `openWorldHint`, and `destructiveHint` annotations.
 - Customer.io currently advertises OAuth authorization, token, dynamic client registration, and PKCE endpoints for both regions. It does not currently expose OpenID configuration or a UserInfo endpoint. Add `openid`, `email`, and UserInfo only if workspace domain restrictions are required.
 - Choose country availability and complete the portal policy attestations.
 
@@ -62,9 +60,10 @@ Verified on August 23, 2026:
 
 - A private ChatGPT Developer Mode connector (`Customer.io Dev`) was created with the Universal MCP URL, OAuth DCR, and only the `read` scope.
 - Customer.io OAuth authorized workspace `Skycouchanddinner` (`226500`), and ChatGPT successfully listed its four active campaigns without making changes.
+- The verified 19-second Developer Mode recording is available at `https://drive.google.com/file/d/1-g24SArgsmUG0jmEJv4KMZc6SkvButPs/view?usp=sharing`; Google Drive metadata confirms anyone with the link can view it and it is not discoverable in search.
 - Both US and EU MCP protected-resource documents are public and advertise the correct region-specific resource URL and Customer.io scopes.
 - Both authorization servers advertise authorization, token, dynamic client registration, authorization-code, and PKCE support.
 - The production services code contains bidirectional OAuth authorization handoff and authenticated request routing between `mcp.customer.io` and `mcp-eu.customer.io`; targeted auth middleware tests pass, and the broader services PR CI is green.
 - The directory, composer, website, support, privacy, terms, and MCP documentation URLs are reachable.
-- The OpenAI domain-verification challenge path currently returns `404`, as expected before the portal issues a verification token. The exact token must be deployed before submission.
-- Authenticated tool behavior is proven in ChatGPT Developer Mode. The final portal scan remains pending until `customerio/services#25232` is deployed so production tool responses include the required output schemas and structured content.
+- The portal issued domain-verification token `D9XrEaD9zp4PJZePXOVkD2dBhDezTRbIAwh3BgYnvK4`; `customerio/services#25232` now serves it as the exact plain-text response at the required well-known path.
+- The initial authenticated portal scan discovered all eight tools. Production currently recommends an output schema for all eight and still reports the old `openWorldHint: false` for `cio_write_api`, directly confirming the fixes that must be deployed from `customerio/services#25232` before the final rescan.
