@@ -1,3 +1,22 @@
 .DS_Store
 customerio-plugin-*.zip
-customerio-plugin-demo.mp4
+
+# Local plugin-submission recordings and rendered previews
+/*.mp4
+/*.mov
+/.capture-*.jpg
+/.continuous-*.jpg
+/.reduced-motion-*.jpg
+/contact-*.jpg
+/continuous-*.jpg
+/demo-*.jpg
+/no-zoom-*.jpg
+
+# Extracted video-frame directories
+/continuous-clean-*/
+/continuous-demo-*/
+/continuous-final-*/
+/demo-capture-*/
+
+# Local docs handoff; publish this through the customerio/docs repository.
+/docs/chatgpt-codex-plugin-docs-handoff.md
