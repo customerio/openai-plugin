@@ -13,7 +13,7 @@ OpenAI recommends Universal URLs for most submissions and reserves Template URLs
 
 - Name: `Customer.io`
 - Version: `1.0.0`
-- Subtitle: `Manage customer journeys`
+- Subtitle: `Optimize customer journeys`
 - Category: `Business & Operations`
 - Developer identity: `Business — Peaberry Software, LLC dba Customer.io`
 - Plugin author: `Peaberry Software, LLC dba Customer.io`
