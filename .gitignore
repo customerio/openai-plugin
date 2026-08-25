@@ -1,5 +1,6 @@
 .DS_Store
 customerio-plugin-*.zip
+chatgpt-app-submission.json
 
 # Local plugin-submission recordings and rendered previews
 /*.mp4
