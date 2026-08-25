@@ -49,7 +49,7 @@ Use `assets/icon-256.png` for the directory icon and `assets/icon-48.png` for th
 
 ## Remaining portal evidence
 
-- Upload the five validated skill ZIPs from `skills/` to the portal's optional Skills section. Chrome file uploads require the ChatGPT browser extension's **Allow access to file URLs** setting; the in-app browser does not expose this portal's native file picker.
+- Wait for the portal safety scans for all five uploaded skills to complete. The portal accepts one ZIP per skill; `customerio`, `customerio-design-studio`, `customerio-journeys`, `customerio-pipelines`, and `customerio-sdk` are attached and currently scanning.
 - Complete the final authenticated tool rescan. The portal reached the correct EU OAuth consent flow for the `Firecorn` workspace with only the required `read` scope, but the user must approve the OAuth grant before the rescan can finish and replace the stale pre-deploy descriptors.
 - Customer.io currently advertises OAuth authorization, token, dynamic client registration, and PKCE endpoints for both regions. It does not currently expose OpenID configuration or a UserInfo endpoint. Add `openid`, `email`, and UserInfo only if workspace domain restrictions are required.
 - Provide a dedicated reviewer account with sample data and no MFA; the portal's test-credentials field is currently blank.
@@ -68,6 +68,7 @@ Verified on August 23 and 25, 2026:
 - `customerio/services#25232` merged as `b48a00bf7d8692b2f9f416220e9222c772379ced` on August 25, 2026. Its post-merge test and deploy workflows completed successfully.
 - The PR's validator regression tests drive the production MCP server options with all eight real tool descriptors, accept every JSON value returned by the dynamic API envelope, reject a malformed success result, and confirm tool errors bypass success-schema validation.
 - The directory, composer, website, support, privacy, terms, and MCP documentation URLs are reachable.
+- The portal stores and renders the 256 × 256 directory icon and 48 × 48 composer icon in both light- and dark-mode previews.
 - The portal issued domain-verification token `D9XrEaD9zp4PJZePXOVkD2dBhDezTRbIAwh3BgYnvK4`; both `https://mcp.customer.io/.well-known/openai-apps-challenge` and `https://mcp-eu.customer.io/.well-known/openai-apps-challenge` return HTTP 200 with that exact plain-text value. The portal verified `mcp.customer.io` successfully on August 25, 2026.
 - The initial authenticated portal scan discovered all eight tools. A post-deploy authenticated MCP call successfully returned the structured `cio_auth_status` envelope and a populated nested `cio_skills_list` envelope. The portal still needs a final rescan to record the updated descriptors.
 - `chatgpt-app-submission.json` validates against OpenAI's currently published `chatgpt-app-submission.v1.json` JSON Schema and contains exactly eight tools, five positive tests, and three negative tests.
