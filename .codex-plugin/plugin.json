@@ -7,7 +7,7 @@
     "email": "win@customer.io",
     "url": "https://customer.io"
   },
-  "homepage": "https://docs.customer.io/ai/mcp/get-started/",
+  "homepage": "https://docs.customer.io/ai/plugins/chatgpt-codex/",
   "repository": "https://github.com/customerio/openai-plugin",
   "license": "MIT",
   "keywords": [

@@ -1,23 +1,47 @@
 # Customer.io plugin for ChatGPT and Codex
 
-This draft packages Customer.io's official MCP server with focused workflows for Journeys, Design Studio, Data Pipelines, and SDK integration.
+Official Customer.io plugin for **ChatGPT** and **Codex**: the hosted **MCP
+connector** (`mcp.customer.io`) plus **skills** for Journeys, Data Pipelines,
+Design Studio, and SDK setup.
 
-## Local test
+## Install
 
-The bundled MCP configuration and public plugin both use the Universal entry point, `https://mcp.customer.io/mcp`. Enable the `customerio` server, complete Customer.io OAuth, select the workspaces and minimum scopes needed, then start with `cio_prime`.
+Install **Customer.io** from the ChatGPT plugin directory once the listing is
+live. The listing is currently awaiting OpenAI review. Until then, follow the
+[setup documentation](https://docs.customer.io/ai/plugins/chatgpt-codex/).
 
-Every Customer.io account belongs to either the US or EU region. The OAuth flow resolves the selected account's region. If it is an EU account, Customer.io completes OAuth against the original US OAuth client and routes subsequent MCP requests to `https://mcp-eu.customer.io/mcp` with a short-lived signed cross-region context. Users of this plugin therefore do not choose or configure a data center manually. Customer.io's general MCP documentation still lists both regional URLs for clients configured directly.
+## Connect
 
-## Safety defaults
+The first use triggers Customer.io OAuth. Pick the workspaces and permission
+scopes you need; read, write, and delete access are granted independently.
 
-- Read-only access is sufficient for inspection and reporting.
-- Writes and deletes must be dry-run first.
-- Live-data and sensitive-data scopes are opt-in Customer.io account controls.
-- API keys and service-account tokens do not belong in this package.
+The plugin uses the Universal entry point `https://mcp.customer.io/mcp` for
+both US and EU accounts. The account's home region is resolved after login, so
+users never pick a data center.
 
-## Source documentation
+Do not paste a personal MCP URL. Do not add a second Customer.io MCP server.
+No API keys or service-account tokens belong in this package.
 
-- [Customer.io MCP setup](https://docs.customer.io/ai/mcp/get-started/)
-- [ChatGPT setup](https://docs.customer.io/ai/mcp/chatgpt/)
-- [OpenAI plugin packaging](https://developers.openai.com/plugins/build/plugins)
-- [OpenAI submission requirements](https://developers.openai.com/plugins/deploy/submission)
+## Skills
+
+| Skill | Use for | Then read from MCP |
+| --- | --- | --- |
+| `customerio` | Bootstrap, region, dry-run, routing | `cio_prime` |
+| `customerio-journeys` | Automations, profiles, segments, broadcasts, transactional, in-app | `fly-api` |
+| `customerio-design-studio` | Design Studio emails and components | `design-studio` |
+| `customerio-pipelines` | Sources, destinations, reverse ETL, data in/out | `cdp-api` |
+| `customerio-sdk` | JS / mobile SDK install, sandbox, go-live | `cio` |
+
+Skill content is adapted from
+[customerio/cursor-plugin](https://github.com/customerio/cursor-plugin), the
+source of truth for skill content, for the OpenAI portal; playbooks live on the
+MCP server (`cio_skills_read`) so they update without a plugin release.
+
+## Docs
+
+- Setup: https://docs.customer.io/ai/plugins/chatgpt-codex/
+- Submission notes: [SUBMISSION.md](SUBMISSION.md)
+
+## License
+
+MIT — see [LICENSE](LICENSE).

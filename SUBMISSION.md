@@ -51,7 +51,7 @@ Use `assets/icon-256.png` for the directory icon and `assets/icon-48.png` for th
 
 - The final authenticated tool rescan completed after approval and cleared the portal's MCP scan requirement.
 - Customer.io currently advertises OAuth authorization, token, dynamic client registration, and PKCE endpoints for both regions. It does not currently expose OpenID configuration or a UserInfo endpoint. Add `openid`, `email`, and UserInfo only if workspace domain restrictions are required.
-- Provide a dedicated reviewer account with sample data and no MFA; the portal's test-credentials field is currently blank.
+- Provide dedicated reviewer test credentials via the portal.
 - Review and complete the portal policy attestations; do not submit until an authorized Customer.io representative has verified every attestation. Country availability is currently set to allow all supported countries.
 
 ## Read-only preflight evidence
@@ -64,7 +64,7 @@ Verified on August 23 and 25, 2026:
 - Both US and EU MCP protected-resource documents are public and advertise the correct region-specific resource URL and Customer.io scopes.
 - Both authorization servers advertise authorization, token, dynamic client registration, authorization-code, and PKCE support.
 - The production services code contains bidirectional OAuth authorization handoff and authenticated request routing between `mcp.customer.io` and `mcp-eu.customer.io`; targeted auth middleware tests pass, and the broader services PR CI is green.
-- `customerio/services#25232` merged as `b48a00bf7d8692b2f9f416220e9222c772379ced` on August 25, 2026. Its post-merge test and deploy workflows completed successfully.
+- The cross-region OAuth and routing work is deployed to production.
 - The PR's validator regression tests drive the production MCP server options with all eight real tool descriptors, accept every JSON value returned by the dynamic API envelope, reject a malformed success result, and confirm tool errors bypass success-schema validation.
 - The directory, composer, website, support, privacy, terms, and MCP documentation URLs are reachable.
 - The portal stores and renders the 256 × 256 directory icon and 48 × 48 composer icon in both light- and dark-mode previews.
