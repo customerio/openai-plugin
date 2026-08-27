@@ -32,7 +32,7 @@ No API keys or service-account tokens belong in this package.
 | `customerio-pipelines` | Sources, destinations, reverse ETL, data in/out | `cdp-api` |
 | `customerio-sdk` | JS / mobile SDK install, sandbox, go-live | `cio` |
 
-The source of truth for skill content, for the OpenAI portal; playbooks live on the MCP server (`cio_skills_read`) so they update without a plugin release.
+Skills in git are thin routers: the real playbooks live on the MCP server (`cio_skills_read`) so they update with the product without a plugin release.
 
 ## Docs
 
