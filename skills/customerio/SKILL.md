@@ -20,7 +20,7 @@ The MCP server signs in to an existing account through OAuth, so it can't create
 2. Run `cio skills read cio/auth.md` and follow its signup section (`cio auth signup start`, then `cio auth signup verify`). This file is CLI-only, so `cio_skills_read` can't serve it.
 3. Signup emails the user a code. Ask the user for it and wait. Never guess a code.
 4. After signup, keep going with the CLI: run `cio prime` and follow its rules.
-5. To use this plugin's MCP server with the new account, an account admin turns on **Customer.io MCP** at https://fly.customer.io/settings/ai. Accounts created with the CLI start with it off. Then connect the MCP server.
+5. To use this plugin's MCP server with the new account, check the `signup verify` response for an `mcp` object. If it's there, MCP is already on: pass `mcp.notice` on to the user as it is, tell them they can change it in the app at `mcp.settings_path`, then connect the MCP server. If there's no `mcp` object, MCP is off: an account admin turns on **Customer.io MCP** at https://fly.customer.io/settings/ai before you connect.
 
 ## Connect
 
