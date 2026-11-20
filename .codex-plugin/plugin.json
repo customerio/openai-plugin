@@ -1,7 +1,7 @@
 {
   "name": "customerio",
-  "version": "1.1.0",
-  "description": "Connect ChatGPT and Codex to Customer.io with the official MCP server and workflows for Journeys, Pipelines, Design Studio, and SDK setup.",
+  "version": "1.2.0",
+  "description": "Connect ChatGPT and Codex to Customer.io with the official MCP server and workflows for Journeys, Pipelines, Design Studio, and SDK setup. New to Customer.io? Create your account while you connect.",
   "author": {
     "name": "Customer.io",
     "email": "win@customer.io",
@@ -25,7 +25,7 @@
   "interface": {
     "displayName": "Customer.io",
     "shortDescription": "Manage customer journeys",
-    "longDescription": "Connect to Customer.io through the official MCP server to inspect workspace data, manage Journeys and Pipelines, build emails, and troubleshoot SDK integrations.",
+    "longDescription": "Connect to Customer.io through the official MCP server to inspect workspace data, manage Journeys and Pipelines, build emails, and troubleshoot SDK integrations. New to Customer.io? Create your account while you connect.",
     "developerName": "Customer.io",
     "category": "Business & Operations",
     "capabilities": ["Read", "Write"],
