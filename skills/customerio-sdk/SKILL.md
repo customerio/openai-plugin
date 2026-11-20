@@ -16,7 +16,18 @@ description: >
 
 ## No Customer.io account yet?
 
-The MCP server signs in to an existing account through OAuth, so it can't create one. When the user has no Customer.io account, create it with the Customer.io CLI. Don't send them to sign up on the website.
+The user can create an account while connecting. Don't send them to sign up on the website.
+
+1. Connect this plugin's MCP server `customerio`. With no Customer.io session in the browser, Connect opens the "Create your Customer.io account" page.
+2. The user enters their email on that page, then the 6-digit code Customer.io emails them, and picks a data center (United States or Europe). The data center can't be changed later. No password is needed. The code goes into the browser page, so don't ask for it in chat.
+3. The browser moves on to the consent page, where the user picks the workspace and permission scopes and allows access.
+4. Call `cio_prime` and carry on.
+
+A user who already has an account clicks **Log in** on that page.
+
+### Already working in the `cio` CLI?
+
+CLI signup works too, for a session that runs the Customer.io CLI.
 
 1. Install the CLI: `npm install -g @customerio/cli`.
 2. Run `cio skills read cio/auth.md` and follow its signup section (`cio auth signup start`, then `cio auth signup verify`). This file is CLI-only, so `cio_skills_read` can't serve it.
