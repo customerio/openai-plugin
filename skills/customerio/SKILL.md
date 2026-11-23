@@ -14,23 +14,22 @@ Use the official Customer.io MCP server bundled with this plugin, then drive the
 
 ## No Customer.io account yet?
 
-The user can create an account while connecting. Don't send them to sign up on the website.
+The user can create one while connecting. Don't send them to sign up on the website.
 
-1. Connect this plugin's MCP server `customerio`. With no Customer.io session in the browser, Connect opens the "Create your Customer.io account" page.
-2. The user enters their email on that page, then the code Customer.io emails them, and picks a data center (United States or Europe). The data center can't be changed later. No password is needed. The code goes into the browser page, so don't ask for it in chat.
-3. The browser moves on to the consent page, where the user picks the workspace and permission scopes and allows access.
-4. Call `cio_prime` and carry on.
+1. Ask the user to connect this plugin's `customerio` MCP server. If the browser isn't signed in to Customer.io, the page that opens starts on creating an account. Someone who already has an account chooses Log in on that page.
+2. They enter their email, then the code Customer.io emails them, and choose a data center, United States or Europe. The data center can't be changed later. No password is needed. The code goes into the browser page, so don't ask for it in chat.
+3. If no code comes and Customer.io's email says they already have an account, they choose Sign in on that page. An account made from an AI client has no password yet, so they use **Forgot password?** to set one, then connect again.
+4. If the browser is already signed in to Customer.io, the page goes straight to the access screen, and the connection uses that login. For a new account, they sign out of Customer.io in that browser and connect again.
+5. Once they allow access, call `cio_prime` and carry on. If they end up in the Customer.io app or don't come back connected, ask them to connect again.
 
-A user who already has an account clicks **Log in** on that page.
+To use the Customer.io web app later, a new account sets a password with **Forgot password?** on the sign-in page.
 
-The new account has no password. To use the Customer.io web app later, the user chooses **Forgot password?** on the sign-in page and sets a password from the emailed link.
+### Already working in the `cio` CLI, or in a shell with no browser?
 
-### Already working in the `cio` CLI?
-
-CLI signup works too, for a session that runs the Customer.io CLI.
+CLI signup works too.
 
 1. Install the CLI: `npm install -g @customerio/cli`.
-2. Run `cio skills read cio/auth.md` and follow its signup section (`cio auth signup start`, then `cio auth signup verify`). This file is CLI-only, so `cio_skills_read` can't serve it.
+2. Run `cio skills read cio/auth.md` and follow its signup section (`cio auth signup start`, then `cio auth signup verify`).
 3. Signup emails the user a code. Ask the user for it and wait. Never guess a code.
 4. After signup, keep going with the CLI: run `cio prime` and follow its rules.
 5. To use this plugin's MCP server with the new account: if the `signup verify` response has an `mcp` object, MCP is already on, so connect the MCP server. If it doesn't, an account admin turns on **Customer.io MCP** at https://fly.customer.io/settings/ai first.
@@ -39,7 +38,7 @@ CLI signup works too, for a session that runs the Customer.io CLI.
 
 1. Confirm the `customerio` MCP server is enabled and complete Customer.io OAuth.
 2. Select the workspaces and minimum permission scopes needed for the task.
-3. The plugin uses the Universal `mcp.customer.io` entry point for both US and EU accounts. OAuth identifies the selected account's data center, and Customer.io routes EU requests to `mcp-eu.customer.io`; do not ask the user to choose a region manually.
+3. The plugin uses the Universal `mcp.customer.io` entry point for both US and EU accounts. OAuth identifies the selected account's data center, and Customer.io routes EU requests to `mcp-eu.customer.io`, so connecting an existing account needs no region choice.
 4. Do not paste personal MCP URLs, API keys, or service-account tokens into plugin files.
 
 ## First calls
