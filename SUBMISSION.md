@@ -39,7 +39,7 @@ Use `assets/icon-256.png` for the directory icon and `assets/icon-48.png` for th
 2. List active automations. Expect `cio_prime`, skill/schema discovery, and a read-only API call that does not change workspace data.
 3. Show delivery metrics for the onboarding automation over the last seven days. Expect clearly labelled metrics and no workspace changes.
 4. Preview creation of a draft segment for recent signups. Expect a validated dry-run and confirmation that no segment was created.
-5. Preview deletion of draft segment `123`. Expect a dry-run naming the target and confirmation that nothing was deleted.
+5. Delete draft segment `123`. Expect the agent to name the account and workspace and wait for the user's yes before deleting.
 
 ## Negative test cases
 
@@ -75,7 +75,7 @@ Verified on August 23 and 25, 2026:
 ## Submission-skill review findings
 
 - Sensitive data solicitation: no tool input explicitly asks for credentials, MFA codes, payment-card data, government identifiers, biometrics, or health data. The generic API tools can access Customer.io workspace data only within the OAuth account, workspace, route, and scope checks enforced by the service; `read:sensitive` remains a separate opt-in scope.
-- Tool data use: `cio_read_api`, `cio_write_api`, and `cio_delete_api` proxy validated Customer.io API operations. Their descriptions identify the method constraints and dry-run workflow, and the submission tests exercise read-only and preview behavior.
+- Tool data use: `cio_read_api`, `cio_write_api`, and `cio_delete_api` proxy validated Customer.io API operations. Their descriptions identify the method constraints, the dry-run workflow for writes and the confirmation step for deletes, and the submission tests exercise read-only, preview and confirmation behavior.
 - Tool naming and descriptions: the eight `cio_*` names match the inspected implementations; no misleading or unsupported capability was found.
 - Widget CSP: the MCP server exposes no widget resources, so there is no widget CSP to narrow or expand.
 - Output schemas: the services PR declares an object-root `outputSchema` for every tool and returns matching structured content on successful calls. The final portal rescan after deployment is still required as production evidence.

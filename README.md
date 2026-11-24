@@ -17,22 +17,20 @@ scopes you need; read, write, and delete access are granted independently.
 
 The plugin uses the Universal entry point `https://mcp.customer.io/mcp` for
 both US and EU accounts. The account's home region is resolved after login, so
-users never pick a data center.
+users never pick a data center to connect.
+
+No Customer.io account yet? The same window lets you create one with your email
+and a code Customer.io emails you. You choose the new account's data center
+there, once.
 
 Do not paste a personal MCP URL. Do not add a second Customer.io MCP server.
 No API keys or service-account tokens belong in this package.
 
-## Skills
+## Skill
 
-| Skill | Use for | Then read from MCP |
-| --- | --- | --- |
-| `customerio` | Bootstrap, region, dry-run, routing | `cio_prime` |
-| `customerio-journeys` | Automations, profiles, segments, broadcasts, transactional, in-app | `fly-api` |
-| `customerio-design-studio` | Design Studio emails and components | `design-studio` |
-| `customerio-pipelines` | Sources, destinations, reverse ETL, data in/out | `cdp-api` |
-| `customerio-sdk` | JS / mobile SDK install, sandbox, go-live | `cio` |
+One skill, `customerio`: it connects the MCP server, walks a user with no account through signup, then points the agent to `cio_prime` and the server’s skills.
 
-Skills in git are thin routers: the real playbooks live on the MCP server (`cio_skills_read`) so they update with the product without a plugin release.
+The playbooks live on the MCP server (`cio_skills_read`) so they update with the product without a plugin release.
 
 ## Docs
 
