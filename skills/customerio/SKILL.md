@@ -16,25 +16,13 @@ Customer.io tools come from this plugin's `customerio` MCP server (`mcp.customer
 
 ## No Customer.io account yet?
 
-The user can create one while connecting. Don't send them to sign up on the website.
-
-1. Ask the user to connect this plugin's `customerio` MCP server. If the browser isn't signed in to Customer.io, the page that opens starts on creating an account. Someone who already has an account chooses Log in on that page.
-2. They enter their email, then the code Customer.io emails them, and choose a data center, United States or Europe. The data center can't be changed later. No password is needed. The code goes into the browser page, so don't ask for it in chat.
-3. If no code comes and Customer.io's email says they already have an account, they choose Sign in on that page. An account made from an AI client has no password yet, so they use **Forgot password?** to set one, then connect again.
-4. If the browser is already signed in to Customer.io, the page goes straight to the access screen, and the connection uses that login. For a new account, they sign out of Customer.io in that browser and connect again.
-5. Once they allow access, call `cio_prime` and carry on. If they end up in the Customer.io app or don't come back connected, ask them to connect again.
-
-To use the Customer.io web app later, a new account sets a password with **Forgot password?** on the sign-in page.
-
-### Already working in the `cio` CLI, or in a shell with no browser?
-
-CLI signup works too.
+The MCP server signs in to an existing account through OAuth, so it can't create one. When the user has no Customer.io account, create it with the Customer.io CLI. Don't send them to sign up on the website.
 
 1. Install the CLI: `npm install -g @customerio/cli`.
-2. Run `cio skills read cio/auth.md` and follow its signup section (`cio auth signup start`, then `cio auth signup verify`).
+2. Run `cio skills read cio/auth.md` and follow its signup section (`cio auth signup start`, then `cio auth signup verify`). This file is CLI-only, so `cio_skills_read` can't serve it.
 3. Signup emails the user a code. Ask the user for it and wait. Never guess a code.
 4. After signup, keep going with the CLI: run `cio prime` and follow its rules.
-5. To use this plugin's MCP server with the new account, connect it. If an older account can't connect, an account admin turns on **Customer.io MCP** at https://fly.customer.io/settings/ai.
+5. To use this plugin's MCP server with the new account: if the `signup verify` response has an `mcp` object, MCP is already on, so connect the MCP server. If it doesn't, an account admin turns on **Customer.io MCP** at https://fly.customer.io/settings/ai first.
 
 ## Once connected
 

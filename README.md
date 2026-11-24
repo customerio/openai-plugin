@@ -17,11 +17,7 @@ scopes you need; read, write, and delete access are granted independently.
 
 The plugin uses the Universal entry point `https://mcp.customer.io/mcp` for
 both US and EU accounts. The account's home region is resolved after login, so
-users never pick a data center to connect.
-
-No Customer.io account yet? The same window lets you create one with your email
-and a code Customer.io emails you. You choose the new account's data center
-there, once.
+users never pick a data center.
 
 Do not paste a personal MCP URL. Do not add a second Customer.io MCP server.
 No API keys or service-account tokens belong in this package.
